@@ -16,6 +16,9 @@ def transfer(operation, original_workbook_name, new_workbook, new_worksheet_name
 
     new_workbook_sheet = new_workbook.active
 
+    # --------------------------------------------------------------------------------
+    #region:Definied Names
+    # --------------------------------------------------------------------------------
     if operation == "defined names":
 
         orignal_def_names = original_workbook.defined_names.definedName #List of defined names
@@ -28,7 +31,11 @@ def transfer(operation, original_workbook_name, new_workbook, new_worksheet_name
                 new_workbook.defined_names.append(new_def_names)
         
         new_workbook.save(spreadsheet_name)
-       
+    #endregion
+
+    # --------------------------------------------------------------------------------
+    #region: Defined names of Column Headers
+    # --------------------------------------------------------------------------------
     elif operation == "defined names column headers":
 
         orignal_def_names = original_workbook.defined_names.definedName #List of defined names
@@ -38,7 +45,11 @@ def transfer(operation, original_workbook_name, new_workbook, new_worksheet_name
                 column_headers.append(name.name) 
                 
         return column_headers
+    #endregion
 
+    # --------------------------------------------------------------------------------
+    #region: Column Headers
+    # --------------------------------------------------------------------------------
     elif operation == "column headers":
 
         for cell in original_workbook_sheet[1]: 
@@ -48,7 +59,8 @@ def transfer(operation, original_workbook_name, new_workbook, new_worksheet_name
         new_workbook.save(spreadsheet_name) 
         
     else:
-     return 0
+        return 0
+    #endregion
 
 def collect(faults_wb, tags_equipment_wb):
 
@@ -202,7 +214,8 @@ def main():
     file_path_faults = "D:\\617000101_FedEx_OLIV\sort9811\\bsc\Excel\Faults_9811.xlsm"  
     faults_wb = load_workbook(file_path_faults)
     #endregion
-   
+
+    transfer("defined names","TagsEquipment_bgfcv_templete.xlsx", tags_equipment_wb, "Tags_Equipment", tags_equipment_wb_name)
     transfer("defined names column headers","TagsEquipment_bgfcv_templete.xlsx",tags_equipment_wb, "Tags_Equipment", tags_equipment_wb_name)
     transfer("column headers","TagsEquipment_bgfcv_templete.xlsx",tags_equipment_wb, "Tags_Equipment", tags_equipment_wb_name)
 
